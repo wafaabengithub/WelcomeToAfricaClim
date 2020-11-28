@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>Choropleth Tutorial - Leaflet</title>
+	
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+	<link rel="stylesheet" href="leaflet.css" />
+	<script src="leaflet.js"></script>
+
+
+	<style>
+		#map {
+			width: 600px;
+			height: 400px;
+		}
+	</style>
+
+	
+</head>
+<body>
+
+<div id='map'></div>
+
+<script type="text/javascript" src="us-states.js"></script>
+
+<script type="text/javascript">
+
+	var map = L.map('map').setView([37.8, -96], 4);
+
+	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+	}).addTo(map);
+
+	// get color depending on population density value
+	function getColor(ggggg) {
+		return ggggg == "Alaska" ? '#800026' :
+		
+							'#FFEDA0';
+	}
+
+	// function styleFeature(feature) {
+	// 	return {
+	// 		weight: 2,
+	// 		opacity: 1,
+	// 		color: 'white',
+	// 		dashArray: '3',
+	// 		fillOpacity: 0.7,
+	// 		fillColor: getColor(feature.properties.density)
+	// 	};
+	// }
+	function styleFeature(feature) {
+		return {
+			weight: 2,
+			opacity: 1,
+			color: 'white',
+			dashArray: '3',
+			fillOpacity: 0.7,
+			fillColor: getColor(feature.properties.name)
+		};
+	}
+
+	var geojson = L.geoJson(statesData, {
+		style: styleFeature,
+	}).addTo(map);
+
+</script>
+
+</body>
+</html>
